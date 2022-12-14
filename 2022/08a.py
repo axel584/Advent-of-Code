@@ -1,7 +1,8 @@
 foret = []
-NB_ARBRE = 99
+#NB_ARBRE = 99
+NB_ARBRE = 5
 
-for line in open('input08.txt').readlines():
+for line in open('input08-test.txt').readlines():
     line = line.strip()
     foret.append([int(x) for x in line])
 #print(foret)
