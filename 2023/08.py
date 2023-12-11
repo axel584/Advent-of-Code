@@ -62,30 +62,27 @@ def enigme_day08_second_part(chemin):
                 gauche,droite = direction.split(', ')
                 #print(gauche,droite)   
                 map[element]=(gauche,droite)
-    i = 0
-    elements_courant = []
     elements_source = []
     for element in map.keys():
         if element.endswith("A"):
-            elements_courant.append(element)
             elements_source.append(element) # une copie aurait été plus propre garçon !
-    print(elements_courant)     
-    print(len(ordre_des_directions)) # 271
+    # print(len(ordre_des_directions)) # 271
     nb_steps = ({"AAA":[],"RLA":[],"QLA":[],"QFA":[],"RXA":[],"JSA":[]})
     print(nb_steps,type(nb_steps))
-    while True:
-        direction = ordre_des_directions[i%len(ordre_des_directions)] 
-        if direction=="L":
-            elements_courant = [map[e][0] for e in elements_courant]
-        else : 
-            elements_courant = [map[e][1] for e in elements_courant]
-        i += 1
-        for indice_element,element in enumerate(elements_courant):
-            if element.endswith("Z"):
-                element_source = elements_source[indice_element]
-                print(element_source,element,i)
-                nb_steps[element_source].append(i)
-                print(nb_steps)
+    for element in elements_source :
+        i = 0
+        element_courant = element
+        print("element",element)
+        while (not element_courant.endswith("Z")) and i%271!=0: # a corriger ici, je pense que c'est là que se trouve le problème
+            direction = ordre_des_directions[i%len(ordre_des_directions)] 
+            if direction=="L":
+                element_courant = map[element_courant][0]
+            else : 
+                element_courant = map[element_courant][1]        
+            i += 1
+            if element_courant.endswith("Z"):
+                nb_steps[element].append(i)
+        print(nb_steps)
 
     return i
 
