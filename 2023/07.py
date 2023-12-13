@@ -118,35 +118,29 @@ class Hand():
 
 class Hand2():
     def calcule_type(self):
-        print("calcule_type ",self.values)
         counter = Counter(self.values)
         # cherche si contient un 'J' et la carte avec le plus grand nombre d'occurence != 'J' 
         nb_joker = 0
         card_max = None
         nb_card_max = 0
         for k,v in counter.items():
-            print("k,v",k,v,type(k))
             if Card2("J")==k:
-                print("trouve un joker")
+                #print("trouve un joker")
                 nb_joker=v
             else : 
                 if v>nb_card_max:
                     nb_card_max=v
                     card_max=k
         # remplace les Joker par la plus haute carte             
-        print("remplace ",nb_joker,card_max,nb_card_max)
         if nb_joker>0 :
-            print("remplace ici",counter)
-            print("card_max",card_max,type(card_max),Card2('J'),type(Card2('J')))
             if card_max!=None and card_max != Card('J'):
                 counter[card_max] = counter[card_max] + nb_joker
-            print("remplace apres",counter)    
 
         nb_pair = 0
         nb_brelan = 0
         for k,v in counter.items():
             if v==5 :
-                print("five")
+                #print("five")
                 return TypeHand.FIVE_OF_A_KIND
             if v==4 :
                 #print("quatre")
