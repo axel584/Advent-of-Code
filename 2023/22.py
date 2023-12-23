@@ -63,6 +63,22 @@ class Brique:
                 return False
         return True
 
+    def combien_fait_tomber(self):
+        liste_tombe = []
+        liste_tombe.append(self)
+        liste_briques_dessus = self.brique_dessus()
+        while len(liste_briques_dessus)>0:
+            b1 = liste_briques_dessus.pop(0)
+            est_supprimable = True
+            for b2 in b1.brique_dessous():
+                if b2 not in liste_tombe :
+                    est_supprimable = False
+            if est_supprimable:
+                liste_tombe.append(b1)
+                for b2 in b1.brique_dessus() : 
+                    if b2 not in liste_briques_dessus:
+                        liste_briques_dessus.append(b2)
+        return len(liste_tombe)-1
 
     def descendre(self):
         while self.a_vide_dessous() :
@@ -127,20 +143,28 @@ def enigme_day22(chemin):
     for brique in briques :
         brique.descendre()
     briques.sort(key=lambda b:b.hauteur_base)
+    # partie 1 :    
     # imprime_carte([100,101,102])  
     # for brique in briques : 
     #     if brique.nom=="1341":
     #         print(brique)
     #         brique.est_supprimable(verbose=True)
+    # res = 0
+    # for brique in briques :
+    #     if brique.est_supprimable():
+    #         res += 1
+    #         print(brique)
+    # Partie 2
+    # for brique in briques : 
+    #     if brique.nom=="1":
+    #         print(brique,brique.combien_fait_tomber())
     res = 0
-    for brique in briques :
-        if brique.est_supprimable():
-            res += 1
-            print(brique)
+    for brique in briques : 
+        res += brique.combien_fait_tomber()
     return res
 
 def test_enigme_day22():
-    assert enigme_day22("input-22-test.txt") == 5
+    assert enigme_day22("input-22-test.txt") == 7
 
 
 if __name__ == "__main__" :
